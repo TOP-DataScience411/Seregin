@@ -1,30 +1,13 @@
 import sys
 
-n = int(sys.stdin.read().strip())  
-
-lower_bound = 10**(n - 1)
-upper_bound = 10**n - 1
-
-prime_count = 0
-
-for num in range(lower_bound, upper_bound + 1):
-    if num <= 1:
-        continue
-    if num <= 3:
-        prime_count += 1
-        continue
-    if num % 2 == 0 or num % 3 == 0:
-        continue
+num = int(sys.stdin.readline().strip())
+sum = 0
+b = '1' + '0' * (num-1)
+b1 = '9' * num
     
+for i in range(int(b), int(b1)+1):
     is_prime = True
-    i = 5
-    while i * i <= num:
-        if num % i == 0 or num % (i + 2) == 0:
-            is_prime = False
-            break
-        i += 6
-    
-    if is_prime:
-        prime_count += 1
-
-print(prime_count)
+    for j in range(2,i):
+            if i % j == 0: is_prime = False
+    if is_prime == True: sum += 1
+sys.stdout.write(f"{sum}")
