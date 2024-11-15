@@ -1,5 +1,5 @@
-from sys import stdin, stdout
-
+from sys import stdin
+from sys import sstdout
 
 fruits = []
 for line in stdin:

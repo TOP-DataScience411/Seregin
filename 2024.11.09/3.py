@@ -11,7 +11,7 @@ else:
 
     for i in range(len(nums_1) - len(nums_2) + 1):
         if nums_1[i:i + len(nums_2)] == nums_2:
-            stdout.write("да\n")
+            stdout.write("да")
             break
     else:
         stdout.write("нет\n")

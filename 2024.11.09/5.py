@@ -18,8 +18,8 @@ word = stdin.readline().strip()
 key = 0
 
 for char in word.upper():  
-    for scores, val in ref5.items():
-        if char in val:
+    for scores, values in ref5.items():
+        if char in values:
             key += scores
             break 
 

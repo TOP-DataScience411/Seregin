@@ -5,16 +5,16 @@ dicts = ref7.list_of_dicts
 
 result = {}
 
-for d in dicts:
-    for key, value in d.items():
-        if key not in result:
-            result[key] = set()
-        result[key].add(value)  
+for char in dicts:
+    for keys, values in char.items():
+        if keys not in result:
+            result[keys] = set()
+        result[keys].add(values)  
 
 
 lines = []
-for key, values in result.items():
-    lines.append(f"'{key}': {{{', '.join(map(str, values))}}}")
+for keys, values in result.items():
+    lines.append(f"'{keys}': {{{', '.join(map(str, values))}}}")
 
 stdout.write(",\n".join(lines) + "\n")
 
