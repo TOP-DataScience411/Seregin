@@ -3,7 +3,8 @@ def taxi_cost(length: None, time=0) -> int :
 
     if length is None or length < 0:
         return None
-        
+    if time < 0:
+        return None       
         
     if length == 0:
         return 160 + time * 3  
