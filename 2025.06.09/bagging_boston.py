@@ -1,46 +1,72 @@
 from pandas import read_csv
-from pandas import read_csv
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
 from sklearn.ensemble import BaggingRegressor
-import numpy as np
-
-from sys import path
-from pathlib import Path
-
-path_dir = Path(path[0])
-data = read_csv(path_dir / "boston.csv")
-
-target = data["MEDV"]
-data = data.drop("MEDV", axis=1)
-
-x_train, x_test, y_train, y_test = train_test_split(data, target, test_size=0.3, random_state=1)
-
-model = BaggingRegressor(
-    estimator=LinearRegression(),
-    n_estimators=17,
-    bootstrap=True,
-    n_jobs=-1,
-    random_state=1
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import (
+    mean_absolute_error,
+    mean_squared_error,
+    r2_score,
 )
 
-model.fit(x_train, y_train)
-pred = model.predict(x_test)
+from pathlib import Path
+from sys import path
 
-mae = mean_absolute_error(y_test, pred)
-mse = mean_squared_error(y_test, pred)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_test, pred)
+script_dir = Path(path[0])
+model = read_csv(script_dir / "boston.csv")
 
-print(f"MAE: {mae:.4f}")
-print(f"MSE: {mse:.4f}")
-print(f"RMSE: {rmse:.4f}")
-print(f"R2: {r2:.4f}")
+y = model["MEDV"]
+x = model.drop(columns=["MEDV"])
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
+
+bagging_model = BaggingRegressor(
+    estimator=DecisionTreeRegressor(),
+    n_estimators=75,
+    n_jobs=-1,
+    random_state=0
+)
+bagging_model.fit(x_train, y_train)
+
+y_predict = bagging_model.predict(x_test)
+
+mae = mean_absolute_error(y_test, y_predict)
+mse = mean_squared_error(y_test, y_predict)
+rmse = mse ** 0.5
+r2 = r2_score(y_test, y_predict)
+
+print(f"MAE= {mae:.2f}")
+print(f"MSE= {mse:.2f}")
+print(f"RMSE= {rmse:.2f}")
+print(f"R2= {r2:.2f}")
 
 
 
-# MAE: 3.2588
-# MSE: 19.0763
-# RMSE: 4.3676
-# R2: 0.7919
+
+
+# bagging_model = BaggingRegressor(
+    # estimator=DecisionTreeRegressor(),
+    # n_estimators=54,
+    # n_jobs=-1,
+    # random_state=0
+# )
+# MAE= 2.47
+# MSE= 14.79
+# RMSE= 3.85
+# R2= 0.82
+# ---------------------------
+
+
+# bagging_model = BaggingRegressor(
+    # estimator=DecisionTreeRegressor(),
+    # n_estimators=75,
+    # n_jobs=-1,
+    # random_state=0
+# )
+# MAE= 2.46
+# MSE= 14.35
+# RMSE= 3.79
+# R2= 0.83
+
+
+    
+    
